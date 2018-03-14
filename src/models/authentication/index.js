@@ -1,2 +1,2 @@
-const blockRouter = require('./blockRouter.js');
-module.exports = {...blockRouter}
+const routes = require('./routes.js');
+module.exports = {...routes}

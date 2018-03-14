@@ -23,3 +23,15 @@ function httpPost(formData, url, cb){
 	}
 	xhr.send(formData);
 }
+function httpPostFile(formData, url, cb){
+	var xhr = new XMLHttpRequest();
+  xhr.open("POST", url);
+  xhr.responseType = 'json';
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4){
+			cb(xhr.response)
+		}
+	}
+	xhr.setRequestHeader("Content-Type", 'false');
+	xhr.send(formData);
+}

@@ -22,11 +22,11 @@
       <label for="inputPassword" class="sr-only">Senha</label>
       <input type="password" id="inputPassword" class="form-control" placeholder="Password">
       <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018. <a href="http://mpsdantas">Marcus Dantas</a></p>
+      <p class="mt-5 mb-3 text-muted">2018. <a style="color:#212121" href="http://mpsdantas">Marcus Dantas</a></p>
     </form>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="js/http.js"></script>
@@ -36,20 +36,19 @@
         $(document).ready(function(){
             $('#formularioLogin').submit(function(e){
               e.preventDefault();
-              const email = $('#inputEmail').val();
-              const senha = $('#inputPassword').val();
+              var email = $('#inputEmail').val();
+              var senha = $('#inputPassword').val();
               var formData = new FormData();
   				    formData.append("email", email);
               formData.append("senha", senha);
               const url = getHostHttp();
               httpPost(formData,url+"/login",function(response){
                 if(response.status){
-
+                  window.location.href = '/dashboard';
+                  console.log(response)
                 }else{
                   var alertHtml = alertBootstrap("alert-danger", response.msg)
                   $('#conteudoErros').append(alertHtml);
-                
-                  
                 }
               });
             });

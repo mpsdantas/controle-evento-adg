@@ -16,6 +16,9 @@ const expressValidator = require('express-validator')
 /* Importar o módulo do express-session. */
 const expressSession = require('express-session')
 
+/* Importar o módulo do express-fileupload. */
+const fileUpload = require('express-fileupload')
+
 /*Importando modulo morgan*/
 const morgan = require('morgan')
 
@@ -28,8 +31,6 @@ const db = require('./db.js')
 /* Abrindo conexão com mongodb */
 mongoose.connect(db.database)
 
-const multiparty = require('connect-multiparty')
-
 /* setar as variáveis 'view engine' e 'views' do express */
 app.set('view engine', 'ejs')
 app.set('views', './src/views')
@@ -37,10 +38,13 @@ app.set('views', './src/views')
 /* configurar o middleware express.static */
 app.use(express.static('./src/public'))
 
+/*Configurando o fileUpload*/
+app.use(fileUpload({ limits: { fileSize: 4 * 1024 * 1024 },
+	safeFileNames: true, preserveExtension: true }));
+
 /* configurar o middleware body-parser */
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-app.use(multiparty())
 
 /* configurar o middleware express-validator */
 app.use(expressValidator())
