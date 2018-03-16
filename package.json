@@ -20,6 +20,7 @@
     "body-parser": "^1.18.2",
     "connect-multiparty": "^2.1.0",
     "consign": "0.1.6",
+    "csvjson": "^5.0.0",
     "ejs": "2.5.7",
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",

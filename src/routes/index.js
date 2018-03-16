@@ -2,8 +2,6 @@ const user = require('../controllers/user')
 const dashboard = require('../controllers/dashboard')
 const routes = require('../models/authentication')
 const crypto = require('crypto')
-const path = require('path')
-const fileUpload = require('express-fileupload')
 module.exports = (application) => {
     application.get('/',(req,res,next)=>{
         routes.redirect(req, res)   
@@ -18,6 +16,7 @@ module.exports = (application) => {
         dashboard.renderPopularBanco(application,req,res)
     })
     application.post('/enviar-csv',(req,res)=>{
-        console.log(req.files)
+        routes.process(req,res)
+        dashboard.uploadPopularBanco(application,req,res)
     })
 }
