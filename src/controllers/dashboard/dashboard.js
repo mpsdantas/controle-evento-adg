@@ -41,7 +41,7 @@ exports.uploadPopularBanco = async (application, req, res) => {
         }
         fs.unlink(urlSalvar+"/arquivoTemp.csv", function(err){
             if(err) console.log(err)
-            console.log("Arquivo salvo")
+            console.log("Arquivo salvo com sucesso.")
         }); 
         res.render('popular-banco',{erro:false,sucesso:true})
     });  
