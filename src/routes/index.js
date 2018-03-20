@@ -19,4 +19,16 @@ module.exports = (application) => {
         routes.process(req,res)
         dashboard.uploadPopularBanco(application,req,res)
     })
+    application.get('/sair',(req,res)=>{
+        routes.process(req,res)
+        user.sair(application,req,res)
+    })
+    application.get('/entrada-participantes', (req,res)=>{
+        routes.process(req,res)
+        res.render('entrada-participantes');
+    })
+    application.post('/entrada-participantes', (req,res)=>{
+        routes.process(req,res)
+        dashboard.buscarParticipantesEntrada(application, req, res);
+    })
 }

@@ -10,3 +10,6 @@ exports.loginUser = async (application, req, res) => {
     req.session.email = buscaPorUsuario.nome;
     return res.json({ status: true, msg: "Usuário autorizado, login realizado" })
 }
+exports.sair = (application, req, res) =>{
+	req.session.destroy((err) => res.redirect('/'));
+}

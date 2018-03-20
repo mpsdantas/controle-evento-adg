@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Entrada participantes - Gerenciamento Arduino Day</title>
+    <link rel="icon" href="img/gim-logo.png">
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <% include components/dashboard/navbar %>
+    <br>
+    <div id="conteudo" class="container">
+        
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-3 col-md-6">
+                <form id="formCpf">
+                    <div class="form-group">
+                      <label for="cpf">Cpf (sem pontos, espaços ou barras):</label>
+                      <input name="cpf" type="text" class="form-control" id="cpf" placeholder="Digite o cpf aqui">
+                    </div>
+                    <button class="btn btn-dark btn-block" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">&copy; 2018. <a style="color:#212121" href="http://mpsdantas">Marcus Dantas</a></span>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/http.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/components.js"></script>
+  </body>
+  <script>
+    $(document).ready(function(){
+        $('#formCpf').submit(function(e){
+            e.preventDefault();
+            var cpf = $('#cpf').val();
+            var formData = new FormData();
+  			formData.append("cpf", cpf);
+            const url = getHostHttp();
+            httpPost(formData,url+"/entrada-participantes",function(response){
+                const participantes = response.buscaParticipantes;
+                if(participantes.length>0){
+                    var html = '<div class="row"><div class="offset-md-2 col-md-8">';
+                    html += '<table class="table table-bordered table-hover"><thead><tr>';
+                    html += '<th scope="col"><center>Nome</center></th>';
+                    html += '<th scope="col"><center>Cpf</center></th>';
+                    html += '<th scope="col"><center>Telefone</center></th>';
+                    html += '<th scope="col"><center>Sexo</center></th>';
+                    html += '<th scope="col"><center>Confirmar entrada</center></th></tr></thead><tbody>'
+                    for(var i=0; i<participantes.length;i++){
+                        html += '<tr>';
+                        html += '<td>'+participantes[i].nome+'</td>'
+                        html += '<td>'+participantes[i].cpf+'</td>'
+                        html += '<td>'+participantes[i].telefone+'</td>'
+                        html += '<td>'+participantes[i].sexo+'</td>'
+                        html += '<td><center><button value="'+ participantes[i]._id+'" type="button" class="btn btn-success entrada"><i class="fas fa-check-square"></i></button></center></td>'
+                        html += '</tr>';
+                    }
+                    html += '</tbody></table></div></div>';
+                    $('#conteudo').append(html);
+                    $('.entrada').click(function(){
+                        var id = this.value;
+                        $('#conteudo').empty();
+                        var htmlForm = '<div class="row"><div class="offset-md-2 col-md-8"><div class="form-group">';
+                            htmlForm += '<label for="formGroupExampleInput">Digite a id da pulseira:</label>'
+                            htmlForm += '<input type="text" class="form-control" id="valorId" placeholder="Digite o valor aqui">'
+                            htmlForm += '<br><button type="button" class="realizarCadastro btn btn-block btn-success">Confirmar entrada</button>'
+                            htmlForm += '</div></div></div>'
+                            $('#conteudo').append(htmlForm);
+                            $('.realizarCadastro').click(function(){
+                                alert($('#valorId').val())
+                            });
+                    });
+                }
+            });
+        });
+    });
+  </script>
+</html>

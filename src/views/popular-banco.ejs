@@ -18,24 +18,26 @@
   <body>
     <% include components/dashboard/navbar %>
     <br>
-    <div class="row">
-      <div class="offset-md-3 col-md-6">
-        <%if(erro){%>
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Erro na população do banco de dados.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        <%}%>
-        <%if(sucesso){%>
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Banco de dados populado com sucesso.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        <%}%>
+    <div class="container">
+      <div class="row">
+        <div class="offset-md-3 col-md-6">
+          <%if(erro){%>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              Erro na população do banco de dados.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          <%}%>
+          <%if(sucesso){%>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              Banco de dados populado com sucesso.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          <%}%>
+        </div>
       </div>
     </div>
     <div class="container">
@@ -50,13 +52,15 @@
                         <label for="exampleFormControlFile1">Escolha um arquivo do tipo csv para popular o banco de dados:</label>
                         <input name="arquivo" type="file" class="form-control-file">
                     </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">Senha para liberar população banco:</label>
+                      <input name="senha" type="password" class="form-control" id="formGroupExampleInput" placeholder="Digite a senha aqui">
+                    </div>
                     <button class="btn btn-dark btn-block" type="submit">Popular</button>
                 </form>
             </div>
-           
         </div>
     </div>
-
     <footer class="footer">
       <div class="container">
         <span class="text-muted">&copy; 2018. <a style="color:#212121" href="http://mpsdantas">Marcus Dantas</a></span>
