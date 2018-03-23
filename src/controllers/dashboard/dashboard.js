@@ -51,6 +51,7 @@ exports.uploadPopularBanco = async (application, req, res) => {
             }
             arrayParticipantes[i].checkin = 0;
             arrayParticipantes[i].checkout = 0;
+            arrayParticipantes[i].idPulseira = 0;
             let novoParticipante = new Participantes(arrayParticipantes[i])
             await novoParticipante.save();
         }
@@ -65,4 +66,40 @@ exports.buscarParticipantesEntrada = async (application, req, res) =>{
     const buscaParticipantes = await Participantes.find({cpf:req.body.cpf,statuscheckin:false});
     res.status(200).json({buscaParticipantes});
     return;
+};
+exports.buscarParticipantesSaida = async (application, req, res) =>{
+    const buscaParticipantes = await Participantes.find({cpf:req.body.cpf,statuscheckin:true});
+    res.status(200).json({buscaParticipantes});
+    return;
+};
+exports.realizarEntrada = async(application, req, res)=>{
+    const dataCheckIn = new Date().getTime();
+    if(req.body.idPulseira==""){
+        res.status(200).json({status:false});
+        return
+    }
+    await Participantes.update({ _id: req.body.idParticipante}, { $set: { idPulseira: req.body.idPulseira,checkin:dataCheckIn,statuscheckin:true}});
+    res.status(200).json({status:true});
+    return
+};
+exports.realizarSaida = async(application, req, res)=>{
+    const dataCheckOut = new Date().getTime();
+    await Participantes.update({ _id: req.body.idParticipante}, { $set: {checkout:dataCheckOut}});
+    res.status(200).json({status:true});
+    return
+};
+exports.setupSystem = async(application, req, res)=>{
+    if(!req.body.senha=="001122334455"){
+        res.status(200).json({status:false})
+    }
+    const nomeUser = "Gim";
+    const email = "gim@ect.ufrn.br";
+    const senha = crypto.createHash("md5").update("gim@natal").digest("hex");
+    const novoUsuario = new Usuarios({
+        "nome": nomeUser,
+        "email": email,
+        "senha": senha
+    })
+    await novoUsuario.save();
+    res.status(200).json({status:true});
 }

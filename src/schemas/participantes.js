@@ -10,6 +10,6 @@ module.export = mongoose.model('Participantes', new Schema({
   sexo:String,
   statuscheckin: Boolean,
   checkin: Number,
-  checkout: Number
-
+  checkout: Number,
+  idPulseira: Number
 }))

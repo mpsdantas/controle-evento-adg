@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Entrada participantes - Gerenciamento Arduino Day</title>
+    <title>Saída participantes - Gerenciamento Arduino Day</title>
     <link rel="icon" href="img/gim-logo.png">
 
     <!-- Bootstrap core CSS -->
@@ -59,9 +59,8 @@
             var cpf = $('#cpf').val();
             var formData = new FormData();
   			formData.append("cpf", cpf);
-            httpPost(formData,"/entrada-participantes",function(response){
+            httpPost(formData,"/saida-participantes",function(response){
                 const participantes = response.buscaParticipantes;
-                console.log(participantes.length)
                 if(participantes.length>0){
                     var html = '<div class="row"><div class="offset-md-2 col-md-8"><div class="table-responsive">';
                     html += '<table class="table table-bordered table-hover"><thead><tr>';
@@ -69,41 +68,30 @@
                     html += '<th scope="col"><center>Cpf</center></th>';
                     html += '<th scope="col"><center>Telefone</center></th>';
                     html += '<th scope="col"><center>Sexo</center></th>';
-                    html += '<th scope="col"><center>Confirmar entrada</center></th></tr></thead><tbody>'
+                    html += '<th scope="col"><center>Confirmar saída</center></th></tr></thead><tbody>'
                     for(var i=0; i<participantes.length;i++){
                         html += '<tr>';
                         html += '<td>'+participantes[i].nome+'</td>'
                         html += '<td>'+participantes[i].cpf+'</td>'
                         html += '<td>'+participantes[i].telefone+'</td>'
                         html += '<td>'+participantes[i].sexo+'</td>'
-                        html += '<td><center><button value="'+ participantes[i]._id+'" type="button" class="btn btn-success entrada"><i class="fas fa-check-square"></i></button></center></td>'
+                        html += '<td><center><button value="'+ participantes[i]._id+'" type="button" class="btn btn-danger saida"><i class="fas fa-check-square"></i></button></center></td>'
                         html += '</tr>';
                     }
                     html += '</tbody></table></div></div></div>';
                     $('#conteudo').append(html);
-                    $('.entrada').click(function(){
+                    $('.saida').click(function(){
                         var idParticipante = this.value;
-                        $('#conteudo').empty();
-                        var htmlForm = '<div class="row"><div class="offset-md-2 col-md-8"><div class="form-group">';
-                            htmlForm += '<label for="formGroupExampleInput">Digite a id da pulseira:</label>'
-                            htmlForm += '<input type="text" class="form-control" id="valorId" placeholder="Digite o valor aqui">'
-                            htmlForm += '<br><button type="button" class="realizarCadastro btn btn-block btn-success">Confirmar entrada</button>'
-                            htmlForm += '</div></div></div>'
-                            $('#conteudo').append(htmlForm);
-                            $('.realizarCadastro').click(function(){
-                                const idPulseira = $('#valorId').val();
-                                var formData = new FormData();
-  				                formData.append("idParticipante", idParticipante);
-                                formData.append("idPulseira", idPulseira);
-                                httpPost(formData,"/realizar-participante",function(response){
-                                    if(response.status){
-                                        alert("Entrada de participante realizada com sucesso.");
-                                        window.location.href = "/entrada-participantes";
-                                    }else{
-                                        alert("Problema na realização da entrada do paticipante");
-                                    }
-                                });
-                            });
+                        var formData = new FormData();
+                        formData.append("idParticipante", idParticipante);
+                        httpPost(formData,"/realizar-saida-participante",function(response){
+                            if(response.status){
+                                alert("Saida de participante realizada com sucesso.");
+                                window.location.href = "/entrada-participantes";
+                            }else{
+                                alert("Problema na realização da saida do paticipante");
+                            }
+                        });
                     });
                 }else{
                     alert('Nenhum participante encontrado');

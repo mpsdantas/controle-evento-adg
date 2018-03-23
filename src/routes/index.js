@@ -31,4 +31,26 @@ module.exports = (application) => {
         routes.process(req,res)
         dashboard.buscarParticipantesEntrada(application, req, res);
     })
+    application.post('/realizar-participante', (req,res)=>{
+        routes.process(req,res)
+        dashboard.realizarEntrada(application, req, res);
+    })
+    application.get('/saida-participantes', (req,res)=>{
+        routes.process(req,res)
+        res.render('saida-participante');
+    })
+    application.post('/saida-participantes', (req,res)=>{
+        routes.process(req,res)
+        dashboard.buscarParticipantesSaida(application, req, res);
+    })
+    application.post('/realizar-saida-participante', (req,res)=>{
+        routes.process(req,res)
+        dashboard.realizarSaida(application, req, res);
+    })
+    application.get('/setup', (req,res)=>{
+        res.render('setup');
+    })
+    application.post('/setup', (req,res)=>{
+        dashboard.setupSystem(application, req, res);
+    })
 }
