@@ -8,7 +8,10 @@ module.export = mongoose.model('Participantes', new Schema({
   email:String,
   telefone: String,
   sexo:String,
-  statuscheckin: Boolean,
+  statuscheckin: {
+  	type: Boolean,
+	default: false
+  },
   checkin: Number,
   checkout: Number,
   idPulseira: Number
