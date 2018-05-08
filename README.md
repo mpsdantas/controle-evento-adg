@@ -17,3 +17,7 @@ Tendo em vista que você fez tudo certo, na pasta raiz execute node app. Seu ser
 ### Login
 
 Agora que você executou o setup basta fazer o login com o email: gim@ect.ufrn.br e senha: "gim@natal".
+
+### Arquivo csv para upload
+
+É de extrema importancia que o seu arquivo .csv possua os sequintes titulos das colunas para que ele possa ser lido corretamente: "nome", "cpf", "datanascimento", "email", "telefone", "sexo". Não necessáriamente nessa ordem mas como o nome exatamente igual ao descrito.
