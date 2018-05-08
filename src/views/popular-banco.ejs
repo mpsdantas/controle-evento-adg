@@ -44,26 +44,27 @@
         <div class="container">
             <div class="row">
                 <div class="offset-md-3 col-md-6">
-                    <form ref='uploadForm' id='uploadForm' action='http://localhost:3000/enviar-csv' method='post' encType="multipart/form-data">
+                    <div id="conteudoMensagem"></div>
+                    <form ref='uploadForm' id='uploadForm' action='/enviar-csv' method='post' encType="multipart/form-data">
                         <div class="form-group">
                             <label for="exampleFormControlFile1">Escolha um arquivo do tipo csv para popular o banco de dados:</label>
                             <input name="arquivo" type="file" class="form-control-file">
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput">Senha para liberar população banco:</label>
-                            <input name="senha" type="password" class="form-control" id="formGroupExampleInput" placeholder="Digite a senha aqui">
+                            <input id="senha" name="senha" type="password" class="form-control" id="formGroupExampleInput" placeholder="Digite a senha aqui">
                         </div>
                         <button class="btn btn-dark btn-block" type="submit">Popular</button>
                     </form>
                     <br>
-                    <button class="btn btn-danger btn-block">Deletar Banco</button>
+                    <button id="deletarBanco" class="btn btn-danger btn-block">Deletar Banco</button>
                 </div>
             </div>
         </div>
         <footer class="footer">
             <div class="container">
                 <span class="text-muted">&copy; 2018.
-                    <a style="color:#212121" href="http://mpsdantas">Marcus Dantas</a>
+                    <a style="color:#212121" href="http://mpsdantas.github.io">Marcus Dantas</a>
                 </span>
             </div>
         </footer>
@@ -71,12 +72,49 @@
         <!-- Bootstrap core JavaScript
     ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <script src="js/http.js"></script>
-        <script src="js/config.js"></script>
-        <script src="js/components.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="./bootstrap/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#deletarBanco').click(function(event){
+                    event.preventDefault();
+                    let senha = $('#senha').val();
+                    $.ajax({
+                        type: "POST",
+                        url: "/deletar-banco",
+                        data: {
+                            senha
+                        },
+                        timeout: 600000,
+                        success: function (data) {
+                            if(data.status){
+                                $('#conteudoMensagem').empty();
+                                let html = `<div class="alert alert-success alert-dismissible fade show"                  role="alert">
+                                                ${data.msg}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>`;
+                                $('#conteudoMensagem').append(html);
+                            }else{  
+                                $('#conteudoMensagem').empty();
+                                let html = `<div class="alert alert-danger alert-dismissible fade show"                  role="alert">
+                                                ${data.msg}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>`;
+                                $('#senha').val("");
+                                $('#conteudoMensagem').append(html);
+                            }
+                        },
+                        error: function (e) {
+                            console.log("ERROR : ", e);
+                        }
+                    });
+                });
+            });
+        </script>
 </body>
 
 </html>

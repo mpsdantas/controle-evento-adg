@@ -27,7 +27,6 @@ exports.uploadPopularBanco = async (application, req, res) => {
         res.render('popular-banco', { erro: true, sucesso: false });
         return;
     }
-    console.log(req.body.senha)
     const sampleFile = req.files.arquivo;
     if (sampleFile == undefined || path.extname(sampleFile.name) !== '.csv') {
         res.render('popular-banco', { erro: true, sucesso: false });
@@ -103,4 +102,12 @@ exports.setupSystem = async (application, req, res) => {
     })
     await novoUsuario.save();
     res.status(200).json({ status: true });
-}
+};
+exports.apagarBanco = async (application, req, res) =>{
+    let senha = req.body.senha;
+    if(senha!=="001122334455") return res.status(200).json({status: false, msg: "Senha inválida"});
+    const participantes = await Participantes.find({});
+    if(participantes.length===0) return res.status(200).json({status:false, msg: "Não existem dados para serem apagados."});
+    await Participantes.collection.drop();
+    return res.status(200).json({status: true, msg: "Banco removido."});
+};
