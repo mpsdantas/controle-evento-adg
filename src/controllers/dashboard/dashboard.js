@@ -6,6 +6,7 @@ const path = require('path');
 const fileUpload = require('express-fileupload');
 const csvjson = require('csvjson');
 const fs = require('fs');
+const matchSorter = require('match-sorter');
 
 exports.renderDashboard = async (application, req, res) => {
     const totalParticipantes = await Participantes.find({});
@@ -63,12 +64,14 @@ exports.uploadPopularBanco = async (application, req, res) => {
     });
 };
 exports.buscarParticipantesEntrada = async (application, req, res) => {
-    const buscaParticipantes = await Participantes.find({ cpf: req.body.cpf, statuscheckin: false });
+    let buscaParticipantes = await Participantes.find({statuscheckin: false });
+    buscaParticipantes = matchSorter(buscaParticipantes, req.body.cpf, {keys: ['nome', 'email','cpf']});
     res.status(200).json({ buscaParticipantes });
     return;
 };
 exports.buscarParticipantesSaida = async (application, req, res) => {
-    const buscaParticipantes = await Participantes.find({ cpf: req.body.cpf, statuscheckin: true });
+    let buscaParticipantes = await Participantes.find({statuscheckin: true });
+    buscaParticipantes = matchSorter(buscaParticipantes, req.body.cpf, {keys: ['nome', 'email','cpf']});
     res.status(200).json({ buscaParticipantes });
     return;
 };

@@ -29,6 +29,7 @@
     "express-validator": "5.0.2",
     "install": "^0.10.4",
     "jsonwebtoken": "^8.2.0",
+    "match-sorter": "^2.2.3",
     "mongoose": "^5.0.9",
     "morgan": "^1.9.0",
     "multiparty": "^4.1.3",

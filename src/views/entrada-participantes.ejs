@@ -28,8 +28,8 @@
             <div class="offset-md-3 col-md-6">
                 <form id="formCpf">
                     <div class="form-group">
-                      <label for="cpf">Cpf (sem pontos, espaços ou barras):</label>
-                      <input name="cpf" type="text" class="form-control" id="cpf" placeholder="Digite o cpf aqui">
+                      <label for="cpf">Nome ou cpf:</label>
+                      <input name="cpf" type="text" class="form-control" id="cpf" placeholder="Nome ou cpf para busca.">
                     </div>
                     <button class="btn btn-dark btn-block" type="submit">Buscar</button>
                 </form>
@@ -80,6 +80,7 @@
                         html += '</tr>';
                     }
                     html += '</tbody></table></div></div></div>';
+                    $('#conteudo').empty();
                     $('#conteudo').append(html);
                     $('.entrada').click(function(){
                         var idParticipante = this.value;
