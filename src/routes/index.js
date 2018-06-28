@@ -56,4 +56,7 @@ module.exports = (application) => {
     application.post('/deletar-banco', (req, res) =>{
         dashboard.apagarBanco(application, req, res);
     });
+    application.get('/lista-participantes', (req, res)=>{
+        dashboard.listarParticipantes(application, req, res);
+    });
 }

@@ -114,3 +114,8 @@ exports.apagarBanco = async (application, req, res) =>{
     await Participantes.collection.drop();
     return res.status(200).json({status: true, msg: "Banco removido."});
 };
+
+exports.listarParticipantes = async (application, req, res) =>{
+    const todosParticipantes = await Participantes.find();
+    res.render('lista-participantes',{todosParticipantes});
+};

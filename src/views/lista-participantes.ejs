@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Lista de participantes - Gerenciamento Arduino Day</title>
+    <link rel="icon" href="img/gim-logo.png">
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+</head>
+
+<body>
+    <% include components/dashboard/navbar %>
+        <div class="container">
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">CPF</th>
+                            <th scope="col">Data de Nascimento</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%for(let i=0; i <todosParticipantes.length; i++){%>
+                            <tr>
+                                <th><%=i+1%></th>
+                                <td><%=todosParticipantes[i].nome%></td>
+                                <td><%=todosParticipantes[i].cpf%></td>
+                                <td><%=todosParticipantes[i].datanascimento%></td>
+                                <td>
+                                    <%if(todosParticipantes[i].statuscheckin){%>
+                                        Presente
+                                    <%}else{%>
+                                        Ausente
+                                    <%}%>
+                                
+                                </td>
+                            </tr>
+                        <%}%>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">&copy; 2018.
+                    <a style="color:#212121" href="http://mpsdantas">Marcus Dantas</a>
+                </span>
+            </div>
+        </footer>
+
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/http.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/components.js"></script>
+</body>
+
+</html>
